@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
+import '../../domain/entities/book.dart';
 
 class BookListItem extends StatelessWidget {
-  final String title;
-  final String author;
-  final String year;
-  final String genre;
-  final String isbn;
+  final Book book; // Теперь принимаем объект Book
 
   const BookListItem({
     super.key,
-    required this.title,
-    required this.author,
-    required this.year,
-    required this.genre,
-    required this.isbn,
+    required this.book,
   });
+
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +22,7 @@ class BookListItem extends StatelessWidget {
           child: const Icon(Icons.book, size: 40),
         ),
         title: Text(
-          title,
+          book.title,
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
@@ -37,11 +31,17 @@ class BookListItem extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Автор: $author'),
-            Text('Год: $year | Жанр: $genre'),
-            Text('ISBN: $isbn'),
+            Text('Автор: ${book.author}'),
+            Text('Год: ${book.year} | Жанр: ${book.genre}'),
+            Text('Цена: ${book.price}'),
           ],
         ),
+        onTap: () {
+        Navigator.of(context).pushNamed(
+            '/bookDetail',
+            arguments: book, // объект Book
+          );
+        } 
       ),
     );
   }
