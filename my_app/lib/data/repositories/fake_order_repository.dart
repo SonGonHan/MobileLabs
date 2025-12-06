@@ -35,7 +35,7 @@ class FakeOrderRepository implements OrderRepository {
   }
 
   @override
-  Future<Order?> getOrderById(String orderId) async {
+  Future<Order?> getOrderById(int? orderId) async {
     try {
       return _orders.firstWhere((o) => o.id == orderId);
     } catch (_) {

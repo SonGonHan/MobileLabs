@@ -42,6 +42,4 @@ class FakeUserRepository implements UserRepository {
     _users.remove(oldUser);
     _users.add(updatedUser);
   }
-  
-  
 }

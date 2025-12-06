@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/domain/usecases/book/search_books.dart';
 
 import '../../domain/entities/book.dart';
 import '../../domain/entities/user.dart';
@@ -30,6 +31,7 @@ class MainShell extends StatefulWidget {
   final UpdateUser updateUser;
   final AddOrder addOrder;
   final GetOrdersByUser getOrdersByUser;
+  final SearchBooks searchBooks;
 
   const MainShell({
     super.key,
@@ -40,6 +42,7 @@ class MainShell extends StatefulWidget {
     required this.updateUser,
     required this.addOrder,
     required this.getOrdersByUser,
+    required this.searchBooks,
   });
 
   @override
@@ -124,7 +127,10 @@ class _MainShellState extends State<MainShell> {
           switch (settings.name) {
             case '/catalog':
               return MaterialPageRoute(
-                builder: (_) => HomePage(getAllBooks: widget.getAllBooks),
+                builder: (_) => HomePage(
+                  key: const PageStorageKey<String>('homePage'),
+                  getAllBooks: widget.getAllBooks, 
+                  searchBooks: widget.searchBooks,),
               );
             case '/cart':
               return MaterialPageRoute(
@@ -180,7 +186,10 @@ class _MainShellState extends State<MainShell> {
               );
             default:
               return MaterialPageRoute(
-                builder: (_) => HomePage(getAllBooks: widget.getAllBooks),
+                builder: (_) => HomePage(
+                  key: const PageStorageKey<String>('homePage'),
+                  getAllBooks: widget.getAllBooks, 
+                  searchBooks: widget.searchBooks),
               );
           }
         },

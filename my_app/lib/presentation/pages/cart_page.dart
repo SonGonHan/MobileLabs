@@ -66,7 +66,7 @@ class _CartPageState extends State<CartPage> {
     }).toList();
 
     final order = Order(
-      id: 0,
+      id: null,
       userLogin: widget.curUser!.login,
       items: items,
       totalAmount: items.fold(

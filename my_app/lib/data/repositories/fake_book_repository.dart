@@ -47,4 +47,19 @@ class FakeBookRepository implements BookRepository {
     return _books.firstWhere((b) => b.isbn == isbn);
   }
 
+  @override
+  Future<List<Book>> searchBooks(String query) async {
+    final q = query.toLowerCase();
+    return _books.where((b) {
+      return b.title.toLowerCase().contains(q) ||
+          b.author.toLowerCase().contains(q) ||
+          b.genre.toLowerCase().contains(q);
+    }).toList();
+  }
+
+   @override
+  Future<List<Book>> getBooksPage({required int limit, required int offset}) async {
+    return getAllBooks();
+  }
+
 }

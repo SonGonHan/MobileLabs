@@ -55,7 +55,6 @@ class AccOrdersPage extends StatelessWidget {
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 8),
-                          // список книг заказа
                           ...order.items.map((item) => Padding(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 2.0),

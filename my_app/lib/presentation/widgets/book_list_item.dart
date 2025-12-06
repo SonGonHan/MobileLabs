@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../domain/entities/book.dart';
 
 class BookListItem extends StatelessWidget {
-  final Book book; // Теперь принимаем объект Book
+  final Book book;
 
   const BookListItem({
     super.key,
@@ -39,7 +39,7 @@ class BookListItem extends StatelessWidget {
         onTap: () {
         Navigator.of(context).pushNamed(
             '/bookDetail',
-            arguments: book, // объект Book
+            arguments: book,
           );
         } 
       ),

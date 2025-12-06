@@ -5,5 +5,5 @@ class GetOrderById {
   final OrderRepository repository;
   GetOrderById(this.repository);
 
-  Future<Order?> call(String orderId) => repository.getOrderById(orderId);
+  Future<Order?> call(int? orderId) => repository.getOrderById(orderId);
 }

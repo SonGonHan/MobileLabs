@@ -1,5 +1,5 @@
 class Order {
-  final int id;
+  final int? id;
   final String userLogin;
   final List<OrderItem> items;
   final double totalAmount;
@@ -7,7 +7,7 @@ class Order {
   final OrderStatus status;
 
   Order({
-    required this.id,
+    this.id,
     required this.userLogin,
     required this.items,
     required this.totalAmount,

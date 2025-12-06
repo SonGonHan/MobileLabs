@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-// Импорты use case и результата — проверь путь под свой проект
 import '../../domain/usecases/user/register_user.dart';
 import '../../domain/usecases/user/user_result.dart';
 
@@ -68,7 +67,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
           backgroundColor: Colors.green,
         ),
       );
-      Navigator.pop(context); // назад на LoginPage
+      Navigator.pop(context);
     } else {
       final message = result.errors.join('\n');
       ScaffoldMessenger.of(context).showSnackBar(
@@ -110,7 +109,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 ),
                 const SizedBox(height: 20),
 
-                // Логин
                 TextField(
                   controller: _loginController,
                   decoration: const InputDecoration(
@@ -120,7 +118,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 ),
                 const SizedBox(height: 16),
 
-                // Пароль
                 TextField(
                   controller: _passwordController,
                   obscureText: true,
@@ -131,7 +128,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 ),
                 const SizedBox(height: 16),
 
-                // Телефон
                 TextField(
                   controller: _phoneController,
                   keyboardType: TextInputType.phone,
@@ -142,7 +138,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 ),
                 const SizedBox(height: 16),
 
-                // Email
                 TextField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
@@ -162,7 +157,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 ),
                 const SizedBox(height: 10),
 
-                // Город
                 TextField(
                   controller: _cityController,
                   decoration: const InputDecoration(
@@ -172,7 +166,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 ),
                 const SizedBox(height: 16),
 
-                // Улица
                 TextField(
                   controller: _streetController,
                   decoration: const InputDecoration(
@@ -182,7 +175,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 ),
                 const SizedBox(height: 16),
 
-                // Дом
                 TextField(
                   controller: _houseController,
                   decoration: const InputDecoration(

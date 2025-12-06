@@ -1,59 +1,84 @@
 import 'package:flutter/material.dart';
-
-import '../../domain/usecases/book/get_all_books.dart';
 import '../../domain/entities/book.dart';
-
+import '../../domain/usecases/book/get_all_books.dart';
+import '../../domain/usecases/book/search_books.dart'; 
 import '../widgets/book_list_item.dart';
 
 class HomePage extends StatefulWidget {
   final GetAllBooks getAllBooks;
+  final SearchBooks searchBooks;
 
-  const HomePage({super.key, required this.getAllBooks});
+  const HomePage({
+    super.key,
+    required this.getAllBooks,
+    required this.searchBooks,
+  });
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomePage> createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  final TextEditingController _searchController = TextEditingController();
-
-  List<Book> _allBooks = [];
-  List<Book> _visibleBooks = [];
-  bool _isLoading = true;
+class HomePageState extends State<HomePage> {
+  final TextEditingController searchController = TextEditingController();
+  List<Book> allBooks = [];
+  List<Book> visibleBooks = [];
+  bool isLoading = true;
+  bool isSearching = false;
 
   @override
   void initState() {
     super.initState();
-    _load();
+    _loadBooks();
   }
 
-  Future<void> _load() async {
-    final result = await widget.getAllBooks();
-    setState(() {
-      _allBooks = result;
-      _visibleBooks = result; // по умолчанию показываем все книги
-      _isLoading = false;
-    });
+  Future<void> _loadBooks() async {
+    setState(() => isLoading = true);
+    try {
+      final result = await widget.getAllBooks();
+      setState(() {
+        allBooks = result;
+        visibleBooks = result;
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        allBooks = [];
+        visibleBooks = [];
+        isLoading = false;
+      });
+    }
   }
 
-  void _applySearch(String query) {
-    final q = query.trim().toLowerCase();
-    setState(() {
-      if (q.isEmpty) {
-        _visibleBooks = _allBooks;
-      } else {
-        _visibleBooks = _allBooks.where((book) {
-          return book.title.toLowerCase().contains(q) ||
-              book.author.toLowerCase().contains(q) ||
-              book.genre.toLowerCase().contains(q);
-        }).toList();
-      }
-    });
+
+  Future<void> applySearch(String query) async {
+    final q = query.trim();
+    if (q.isEmpty) {
+      setState(() {
+        visibleBooks = allBooks;
+        isSearching = false;
+      });
+      return;
+    }
+
+    setState(() => isSearching = true);
+    
+    try {
+      final results = await widget.searchBooks(q);
+      setState(() {
+        visibleBooks = results;
+        isSearching = false;
+      });
+    } catch (e) {
+      setState(() {
+        visibleBooks = [];
+        isSearching = false;
+      });
+    }
   }
 
   @override
   void dispose() {
-    _searchController.dispose();
+    searchController.dispose();
     super.dispose();
   }
 
@@ -63,59 +88,41 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: Column(
           children: [
-            // Поле поиска + кнопка
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: _searchController,
-                      decoration: InputDecoration(
-                        hintText: 'Поиск по названию, автору, жанру...',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        prefixIcon: const Icon(Icons.search),
-                      ),
-                      onChanged: _applySearch,
-                    ),
+              child: TextField(
+                controller: searchController,
+                decoration: InputDecoration(
+                  hintText: 'Поиск книг...',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
                   ),
-                  const SizedBox(width: 8),
-                  ElevatedButton(
-                    onPressed: () => _applySearch(_searchController.text),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 24,
-                        vertical: 16,
-                      ),
-                    ),
-                    child: const Text('Найти'),
-                  ),
-                ],
+                  prefixIcon: const Icon(Icons.search),
+                ),
+                onChanged: (text) {
+                  if (text.length > 2) {
+                    applySearch(text);
+                  } else if (text.isEmpty) {
+                    applySearch('');
+                  }
+                },
               ),
             ),
-
-            // Список книг / загрузка / пустой результат
-            Expanded(
-              child: _isLoading
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : _visibleBooks.isEmpty
-                      ? const Center(
-                          child: Text('Книги не найдены'),
-                        )
-                      : ListView.builder(
-                          padding: const EdgeInsets.all(8.0),
-                          itemCount: _visibleBooks.length,
-                          itemBuilder: (context, index) {
-                            final book = _visibleBooks[index];
-                            return BookListItem(book: book);
-                          },
-                        ),
-            ),
+            if (isLoading || isSearching)
+              const Expanded(
+                child: Center(child: CircularProgressIndicator()),
+              )
+            else
+              Expanded(
+                child: ListView.builder(
+                  padding: const EdgeInsets.all(8.0),
+                  itemCount: visibleBooks.length,
+                  itemBuilder: (context, index) {
+                    final book = visibleBooks[index];
+                    return BookListItem(book: book);
+                  },
+                ),
+              ),
           ],
         ),
       ),
