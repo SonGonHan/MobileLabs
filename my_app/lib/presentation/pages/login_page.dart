@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_app/domain/usecases/user/authenticate_user.dart';
-import 'package:my_app/domain/usecases/user/user_result.dart';
-import 'package:my_app/domain/usecases/user/get_by_login.dart';
+import '../../domain/usecases/user/authenticate_user.dart';
+import '../../domain/usecases/user/user_result.dart';
+import '../../domain/usecases/user/get_by_login.dart';
 
 class LoginPage extends StatefulWidget {
   final AuthenticateUser authenticateUser;

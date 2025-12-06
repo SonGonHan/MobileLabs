@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_app/domain/usecases/book/search_books.dart';
+import '../../domain/usecases/book/search_books.dart';
 
 import 'data/local/database/app_database.dart';
 import 'data/local/book_storage_impl.dart';

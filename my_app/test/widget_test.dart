@@ -1,21 +1,21 @@
+import 'package:bookstore/domain/repositories/order_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:my_app/data/repositories/fake_order_repository.dart';
-import 'package:my_app/data/repositories/fake_user_repository.dart';
-import 'package:my_app/data/repositories/fake_book_repository.dart';
-import 'package:my_app/domain/repositories/book_repository.dart';
-import 'package:my_app/domain/repositories/order_repository.dart';
-import 'package:my_app/domain/repositories/user_repository.dart';
-import 'package:my_app/domain/usecases/book/get_all_books.dart';
-import 'package:my_app/domain/usecases/book/search_books.dart';
-import 'package:my_app/domain/usecases/order/add_order.dart';
-import 'package:my_app/domain/usecases/order/get_orders_by_user.dart';
-import 'package:my_app/domain/usecases/user/authenticate_user.dart';
-import 'package:my_app/domain/usecases/user/get_by_login.dart';
-import 'package:my_app/domain/usecases/user/register_user.dart';
-import 'package:my_app/domain/usecases/user/update_user.dart';
+import 'package:bookstore/data/repositories/fake_order_repository.dart';
+import 'package:bookstore/data/repositories/fake_user_repository.dart';
+import 'package:bookstore/data/repositories/fake_book_repository.dart';
+import 'package:bookstore/domain/repositories/book_repository.dart';
+import 'package:bookstore/domain/repositories/user_repository.dart';
+import 'package:bookstore/domain/usecases/book/get_all_books.dart';
+import 'package:bookstore/domain/usecases/book/search_books.dart';
+import 'package:bookstore/domain/usecases/order/add_order.dart';
+import 'package:bookstore/domain/usecases/order/get_orders_by_user.dart';
+import 'package:bookstore/domain/usecases/user/authenticate_user.dart';
+import 'package:bookstore/domain/usecases/user/get_by_login.dart';
+import 'package:bookstore/domain/usecases/user/register_user.dart';
+import 'package:bookstore/domain/usecases/user/update_user.dart';
 
-import 'package:my_app/main.dart';
+import 'package:bookstore/main.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

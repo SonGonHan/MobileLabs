@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_app/domain/usecases/user/user_result.dart';
+import '../../domain/usecases/user/user_result.dart';
 import '../../domain/usecases/user/update_user.dart';
 import '../../domain/entities/user.dart';
 
